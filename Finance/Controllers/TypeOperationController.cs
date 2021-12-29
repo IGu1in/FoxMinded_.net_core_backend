@@ -51,7 +51,7 @@ namespace Finance.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<TypeOperation>> Put(TypeOperation operation)
+        public ActionResult<TypeOperation> Put(TypeOperation operation)
         {
             if (operation == null)
             {
@@ -60,7 +60,7 @@ namespace Finance.Controllers
 
             try
             {
-                await _service.Edit(operation);
+                _service.Edit(operation);
             }
             catch (NotFoundException)
             {
@@ -71,11 +71,11 @@ namespace Finance.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TypeOperation>> Delete(int id)
+        public ActionResult<TypeOperation> Delete(int id)
         {
             try
             {
-                await _service.Delete(id);
+                _service.Delete(id);
             }
             catch (NotFoundException)
             {
