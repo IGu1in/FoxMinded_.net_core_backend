@@ -1,8 +1,8 @@
-﻿using Finance.Models;
+﻿using Finance.Exceptions;
+using Finance.Infrastructure;
+using Finance.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Finance.Controllers
@@ -11,23 +11,23 @@ namespace Finance.Controllers
     [Route("api/[controller]")]
     public class TypeOperationController : ControllerBase
     {
-        readonly FinanceContext _db;
+        private readonly ITypeOperationService _service;
 
-        public TypeOperationController(FinanceContext context)
+        public TypeOperationController(ITypeOperationService service)
         {
-            _db = context;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TypeOperation>>> Get()
         {
-            return await _db.TypeOperations.ToListAsync();
+            return new ObjectResult(await _service.Get());
         }
 
         [HttpGet("{type}")]
         public ActionResult<TypeOperation> Get(bool type)
         {
-            var operation =  _db.TypeOperations.AsParallel().Where(x => x.IsIncome == type);
+            var operation = _service.GetByType(type);
 
             if (operation == null)
             {
@@ -45,8 +45,7 @@ namespace Finance.Controllers
                 return BadRequest();
             }
 
-            _db.TypeOperations.Add(operation);
-            await _db.SaveChangesAsync();
+            await _service.Create(operation);
 
             return Ok(operation);
         }
@@ -59,13 +58,14 @@ namespace Finance.Controllers
                 return BadRequest();
             }
 
-            if (!_db.TypeOperations.Any(x => x.TypeOperationId == operation.TypeOperationId))
+            try
+            {
+                await _service.Edit(operation);
+            }
+            catch (NotFoundException)
             {
                 return NotFound();
             }
-
-            _db.Update(operation);
-            await _db.SaveChangesAsync();
 
             return Ok(operation);
         }
@@ -73,17 +73,16 @@ namespace Finance.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<TypeOperation>> Delete(int id)
         {
-            TypeOperation operation = _db.TypeOperations.FirstOrDefault(x => x.TypeOperationId == id);
-
-            if (operation == null)
+            try
+            {
+                await _service.Delete(id);
+            }
+            catch (NotFoundException)
             {
                 return NotFound();
             }
 
-            _db.TypeOperations.Remove(operation);
-            await _db.SaveChangesAsync();
-
-            return Ok(operation);
+            return Ok();
         }
     }
 }

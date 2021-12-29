@@ -1,4 +1,7 @@
+using Finance.Application;
+using Finance.Infrastructure;
 using Finance.Models;
+using Finance.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +22,10 @@ namespace Finance
         {
             string con = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<FinanceContext>(options => options.UseSqlServer(con));
+            services.AddTransient<IFinanceOperationRepository, FinanceOperationRepository>();
+            services.AddTransient<IFinanceOperationService, FinanceOperationService>();
+            services.AddTransient<ITypeOperationRepository, TypeOperationRepository>();
+            services.AddTransient<ITypeOperationService, TypeOperationService>();
             services.AddControllers();
         }
 
