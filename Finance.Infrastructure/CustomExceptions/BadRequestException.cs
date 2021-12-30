@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Finance.Exceptions
+namespace Finance.Infrastructure.CustomExceptions
 {
     public class BadRequestException : Exception
     {

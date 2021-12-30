@@ -6,11 +6,11 @@ namespace Finance.Infrastructure
 {
     public interface IFinanceOperationService
     {
-        Task Create(FinanceOperation oper);
-        Task<IEnumerable<FinanceOperation>> Get();
+        Task CreateAsync(FinanceOperation operation);
+        Task<IEnumerable<FinanceOperation>> GetAsync();
         IEnumerable<object> GetByData(string data);
         IEnumerable<object> GetByPeriod(string data1, string data2);
-        Task Edit(FinanceOperation oper);
-        Task Delete(int id);
+        Task EditAsync(FinanceOperation operation);
+        Task DeleteAsync(int id);
     }
 }

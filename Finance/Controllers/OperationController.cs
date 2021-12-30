@@ -1,4 +1,4 @@
-﻿using Finance.Exceptions;
+﻿using Finance.Infrastructure.CustomExceptions;
 using Finance.Infrastructure;
 using Finance.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +19,9 @@ namespace Finance.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FinanceOperation>>> Get()
+        public async Task<ActionResult<IEnumerable<FinanceOperation>>> GetAsync()
         {
-            return  new ObjectResult(await _service.Get());
+            return  new ObjectResult(await _service.GetAsync());
         }
 
         [HttpGet("{dataStr}")]
@@ -41,14 +41,14 @@ namespace Finance.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<FinanceOperation>> Post(FinanceOperation operation)
+        public async Task<ActionResult<FinanceOperation>> PostAsync(FinanceOperation operation)
         {
             if (operation == null)
             {
                 return BadRequest();
             }
 
-            await _service.Create(operation);
+            await _service.CreateAsync(operation);
 
             return Ok(operation);
         }
@@ -63,7 +63,7 @@ namespace Finance.Controllers
 
             try
             {
-                _service.Edit(operation);
+                _service.EditAsync(operation);
             }
             catch(NotFoundException)
             {
@@ -78,7 +78,7 @@ namespace Finance.Controllers
         {
             try
             {
-                _service.Delete(id);
+                _service.DeleteAsync(id);
             }
             catch (NotFoundException)
             {

@@ -6,10 +6,10 @@ namespace Finance.Infrastructure
 {
     public interface ITypeOperationService
     {
-        Task Create(TypeOperation oper);
-        Task<IEnumerable<TypeOperation>> Get();
+        Task CreateAsync(TypeOperation operation);
+        Task<IEnumerable<TypeOperation>> GetAsync();
         IEnumerable<TypeOperation> GetByType(bool type);
-        Task Edit(TypeOperation oper);
-        Task Delete(int id);
+        Task EditAsync(TypeOperation operation);
+        Task DeleteAsync(int id);
     }
 }

@@ -1,19 +1,16 @@
 ﻿using Finance.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Finance.Infrastructure
 {
     public interface ITypeOperationRepository
     {
-        Task Create(TypeOperation oper);
-        Task<IEnumerable<TypeOperation>> Get();
+        Task CreateAsync(TypeOperation operation);
+        Task<IEnumerable<TypeOperation>> GetAsync();
         IEnumerable<TypeOperation> GetByType(bool type);
         TypeOperation GetById(int id);
-        Task Edit(TypeOperation oper);
-        Task Delete(TypeOperation oper);
+        Task EditAsync(TypeOperation operation);
+        Task DeleteAsync(TypeOperation operation);
     }
 }

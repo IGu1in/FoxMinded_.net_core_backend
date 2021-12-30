@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Finance.Exceptions\Finance.Exceptions.csproj" />
     <ProjectReference Include="..\Finance.Infrastructure\Finance.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -7,12 +7,12 @@ namespace Finance.Infrastructure
 {
     public interface IFinanceOperationRepository
     {
-        Task Create(FinanceOperation oper);
-        Task<IEnumerable<FinanceOperation>> Get();
+        Task CreateAsync(FinanceOperation operation);
+        Task<IEnumerable<FinanceOperation>> GetAsync();
         FinanceOperation GetById(int id);
         IEnumerable<FinanceOperation> GetByData(DateTime data, bool type);
         IEnumerable<FinanceOperation> GetByPeriod(DateTime data1, DateTime data2, bool type);
-        Task Edit(FinanceOperation oper);
-        Task Delete(FinanceOperation oper);
+        Task EditAsync(FinanceOperation operation);
+        Task DeleteAsync(FinanceOperation operation);
     }
 }

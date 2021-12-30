@@ -16,25 +16,25 @@ namespace Finance.Repository
             _db = context;
         }
 
-        public async Task Create(TypeOperation oper)
+        public async Task CreateAsync(TypeOperation operation)
         {
-            _db.TypeOperations.Add(oper);
+            _db.TypeOperations.Add(operation);
             await _db.SaveChangesAsync();
         }
 
-        public async Task Delete(TypeOperation oper)
+        public async Task DeleteAsync(TypeOperation operation)
         {
-            _db.TypeOperations.Remove(oper);
+            _db.TypeOperations.Remove(operation);
             await _db.SaveChangesAsync();
         }
 
-        public async Task Edit(TypeOperation oper)
+        public async Task EditAsync(TypeOperation operation)
         {
-            _db.Update(oper);
+            _db.Update(operation);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<TypeOperation>> Get()
+        public async Task<IEnumerable<TypeOperation>> GetAsync()
         {
             return await _db.TypeOperations.ToListAsync();
         }

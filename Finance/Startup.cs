@@ -26,6 +26,7 @@ namespace Finance
             services.AddTransient<IFinanceOperationService, FinanceOperationService>();
             services.AddTransient<ITypeOperationRepository, TypeOperationRepository>();
             services.AddTransient<ITypeOperationService, TypeOperationService>();
+            services.AddTransient<IRepositoryManager, RepositoryManager>();
             services.AddControllers();
         }
 

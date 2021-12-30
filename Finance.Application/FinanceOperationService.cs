@@ -1,4 +1,4 @@
-﻿using Finance.Exceptions;
+﻿using Finance.Infrastructure.CustomExceptions;
 using Finance.Infrastructure;
 using Finance.Models;
 using System;
@@ -10,45 +10,45 @@ namespace Finance.Application
 {
     public class FinanceOperationService : IFinanceOperationService
     {
-        private readonly IFinanceOperationRepository _repository;
+        private readonly IRepositoryManager _repository;
 
-        public FinanceOperationService(IFinanceOperationRepository repository)
+        public FinanceOperationService(IRepositoryManager repository)
         {
             _repository = repository;
         }
 
-        public async Task Create(FinanceOperation oper)
+        public async Task CreateAsync(FinanceOperation operation)
         {
-            await _repository.Create(oper);
+            await _repository.FinanceOperation.CreateAsync(operation);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var financeOperation = _repository.GetById(id);
+            var financeOperation = _repository.FinanceOperation.GetById(id);
 
             if (financeOperation == null)
             {
                 throw new NotFoundException();
             }
 
-            await _repository.Delete(financeOperation);
+            await _repository.FinanceOperation.DeleteAsync(financeOperation);
         }
 
-        public async Task Edit(FinanceOperation oper)
+        public async Task EditAsync(FinanceOperation operation)
         {
-            var financeOperation = _repository.GetById(oper.FinanceOperationId);
+            var financeOperation = _repository.FinanceOperation.GetById(operation.FinanceOperationId);
 
             if (financeOperation == null)
             {
                 throw new NotFoundException();
             }
 
-            await _repository.Edit(oper);
+            await _repository.FinanceOperation.EditAsync(operation);
         }
 
-        public async Task<IEnumerable<FinanceOperation>> Get()
+        public async Task<IEnumerable<FinanceOperation>> GetAsync()
         {
-            return await _repository.Get();
+            return await _repository.FinanceOperation.GetAsync();
         }
 
         public IEnumerable<object> GetByData(string dataStr)
@@ -64,8 +64,8 @@ namespace Finance.Application
             decimal sumExpence = 0;
             var result = new List<object>();
 
-            var listIncome = _repository.GetByData(data, true).ToList();
-            var listExpence = _repository.GetByData(data, false).ToList();
+            var listIncome = _repository.FinanceOperation.GetByData(data, true).ToList();
+            var listExpence = _repository.FinanceOperation.GetByData(data, false).ToList();
 
             if (listExpence.Count == 0 && listIncome.Count == 0)
             {
@@ -104,8 +104,8 @@ namespace Finance.Application
             decimal sumExpence = 0;
             var result = new List<object>();
 
-            var listIncome = _repository.GetByPeriod(data1, data2, true).ToList();
-            var listExpence = _repository.GetByPeriod(data1, data2, false).ToList();
+            var listIncome = _repository.FinanceOperation.GetByPeriod(data1, data2, true).ToList();
+            var listExpence = _repository.FinanceOperation.GetByPeriod(data1, data2, false).ToList();
 
             if (listExpence.Count == 0 && listIncome.Count == 0)
             {

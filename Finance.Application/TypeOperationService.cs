@@ -1,4 +1,4 @@
-﻿using Finance.Exceptions;
+﻿using Finance.Infrastructure.CustomExceptions;
 using Finance.Infrastructure;
 using Finance.Models;
 using System.Collections.Generic;
@@ -8,50 +8,50 @@ namespace Finance.Application
 {
     public class TypeOperationService : ITypeOperationService
     {
-        private readonly ITypeOperationRepository _repository;
+        private readonly IRepositoryManager _repository;
 
-        public TypeOperationService(ITypeOperationRepository repository)
+        public TypeOperationService(IRepositoryManager repository)
         {
             _repository = repository;
         }
 
-        public async Task Create(TypeOperation oper)
+        public async Task CreateAsync(TypeOperation operation)
         {
-            await _repository.Create(oper);
+            await _repository.TypeOperation.CreateAsync(operation);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var typeOperation = _repository.GetById(id);
+            var typeOperation = _repository.TypeOperation.GetById(id);
 
             if (typeOperation == null)
             {
                 throw new NotFoundException();
             }
 
-            await _repository.Delete(typeOperation);
+            await _repository.TypeOperation.DeleteAsync(typeOperation);
         }
 
-        public async Task Edit(TypeOperation oper)
+        public async Task EditAsync(TypeOperation operation)
         {
-            var typeOperation = _repository.GetById(oper.TypeOperationId);
+            var typeOperation = _repository.TypeOperation.GetById(operation.TypeOperationId);
 
             if (typeOperation == null)
             {
                 throw new NotFoundException();
             }
 
-            await _repository.Edit(oper);
+            await _repository.TypeOperation.EditAsync(operation);
         }
 
-        public async Task<IEnumerable<TypeOperation>> Get()
+        public async Task<IEnumerable<TypeOperation>> GetAsync()
         {
-            return await _repository.Get();
+            return await _repository.TypeOperation.GetAsync();
         }
 
         public IEnumerable<TypeOperation> GetByType(bool type)
         {
-            return _repository.GetByType(type);
+            return _repository.TypeOperation.GetByType(type);
         }
     }
 }
