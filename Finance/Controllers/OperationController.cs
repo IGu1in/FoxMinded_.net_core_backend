@@ -27,17 +27,39 @@ namespace Finance.Controllers
         [HttpGet("{dataStr}")]
         public ActionResult<FinanceOperation> Get(string dataStr)
         {
-            var result =  _service.GetByData(dataStr);
+            try
+            {
+                var result = _service.GetByData(dataStr);
 
-            return new ObjectResult(result);
+                return new ObjectResult(result);
+            }
+            catch (BadRequestException)
+            {
+                return BadRequest();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("{dataStr1}/{dataStr2}")]
         public ActionResult<FinanceOperation> Get(string dataStr1, string dataStr2)
         {
-            var result = _service.GetByPeriod(dataStr1, dataStr2);
+            try
+            {
+                var result = _service.GetByPeriod(dataStr1, dataStr2);
 
-            return new ObjectResult(result);
+                return new ObjectResult(result);
+            }
+            catch (BadRequestException)
+            {
+                return BadRequest();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -54,7 +76,7 @@ namespace Finance.Controllers
         }
 
         [HttpPut]
-        public ActionResult<FinanceOperation> Put(FinanceOperation operation)
+        public async Task<ActionResult<FinanceOperation>> PutAsync(FinanceOperation operation)
         {
             if (operation == null)
             {
@@ -63,7 +85,7 @@ namespace Finance.Controllers
 
             try
             {
-                _service.EditAsync(operation);
+                await _service.EditAsync(operation);
             }
             catch(NotFoundException)
             {
@@ -74,11 +96,11 @@ namespace Finance.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<FinanceOperation> Delete(int id)
+        public async Task<ActionResult<FinanceOperation>> DeleteAsync(int id)
         {
             try
             {
-                _service.DeleteAsync(id);
+                await _service.DeleteAsync(id);
             }
             catch (NotFoundException)
             {

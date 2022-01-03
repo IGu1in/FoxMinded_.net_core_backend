@@ -18,6 +18,7 @@ namespace Finance.Application
         public async Task CreateAsync(TypeOperation operation)
         {
             await _repository.TypeOperation.CreateAsync(operation);
+            await _repository.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
@@ -29,7 +30,8 @@ namespace Finance.Application
                 throw new NotFoundException();
             }
 
-            await _repository.TypeOperation.DeleteAsync(typeOperation);
+            _repository.TypeOperation.Delete(typeOperation);
+            await _repository.SaveChangesAsync();
         }
 
         public async Task EditAsync(TypeOperation operation)
@@ -41,7 +43,8 @@ namespace Finance.Application
                 throw new NotFoundException();
             }
 
-            await _repository.TypeOperation.EditAsync(operation);
+            _repository.TypeOperation.Edit(operation);
+            await _repository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TypeOperation>> GetAsync()

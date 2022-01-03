@@ -20,6 +20,7 @@ namespace Finance.Application
         public async Task CreateAsync(FinanceOperation operation)
         {
             await _repository.FinanceOperation.CreateAsync(operation);
+            await _repository.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
@@ -31,7 +32,8 @@ namespace Finance.Application
                 throw new NotFoundException();
             }
 
-            await _repository.FinanceOperation.DeleteAsync(financeOperation);
+            _repository.FinanceOperation.Delete(financeOperation);
+            await _repository.SaveChangesAsync();
         }
 
         public async Task EditAsync(FinanceOperation operation)
@@ -43,7 +45,8 @@ namespace Finance.Application
                 throw new NotFoundException();
             }
 
-            await _repository.FinanceOperation.EditAsync(operation);
+            _repository.FinanceOperation.Edit(operation);
+            await _repository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<FinanceOperation>> GetAsync()

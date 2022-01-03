@@ -28,15 +28,19 @@ namespace Finance
             services.AddTransient<ITypeOperationService, TypeOperationService>();
             services.AddTransient<IRepositoryManager, RepositoryManager>();
             services.AddControllers();
+            services.AddSwaggerGen();
         }
 
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Finance API");
+            });
             app.UseDeveloperExceptionPage();
-
             app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers(); 

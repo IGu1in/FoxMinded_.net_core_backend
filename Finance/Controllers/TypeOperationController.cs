@@ -71,11 +71,11 @@ namespace Finance.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<TypeOperation> Delete(int id)
+        public async Task<ActionResult<TypeOperation>> DeleteAsync(int id)
         {
             try
             {
-                _service.DeleteAsync(id);
+                await _service.DeleteAsync(id);
             }
             catch (NotFoundException)
             {

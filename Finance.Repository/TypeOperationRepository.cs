@@ -18,20 +18,17 @@ namespace Finance.Repository
 
         public async Task CreateAsync(TypeOperation operation)
         {
-            _db.TypeOperations.Add(operation);
-            await _db.SaveChangesAsync();
+            await _db.TypeOperations.AddAsync(operation);
         }
 
-        public async Task DeleteAsync(TypeOperation operation)
+        public void Delete(TypeOperation operation)
         {
             _db.TypeOperations.Remove(operation);
-            await _db.SaveChangesAsync();
         }
 
-        public async Task EditAsync(TypeOperation operation)
+        public void Edit(TypeOperation operation)
         {
-            _db.Update(operation);
-            await _db.SaveChangesAsync();
+            _db.TypeOperations.Update(operation);
         }
 
         public async Task<IEnumerable<TypeOperation>> GetAsync()
