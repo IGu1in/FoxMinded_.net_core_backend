@@ -36,14 +36,14 @@ namespace Finance.Repository
             return await _db.TypeOperations.ToListAsync();
         }
 
-        public TypeOperation GetById(int id)
+        public async Task<TypeOperation> GetByIdAsync(int id)
         {
-            return _db.TypeOperations.FirstOrDefault(x => x.TypeOperationId == id);
+            return await _db.TypeOperations.FirstOrDefaultAsync(x => x.TypeOperationId == id);
         }
 
-        public IEnumerable<TypeOperation> GetByType(bool type)
+        public async Task<IEnumerable<TypeOperation>> GetByTypeAsync(bool type)
         {
-            return _db.TypeOperations.AsParallel().Where(x => x.IsIncome == type);
+            return await _db.TypeOperations.Where(x => x.IsIncome == type).ToListAsync();
         }
     }
 }

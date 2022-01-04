@@ -8,8 +8,8 @@ namespace Finance.Infrastructure
     {
         Task CreateAsync(TypeOperation operation);
         Task<IEnumerable<TypeOperation>> GetAsync();
-        IEnumerable<TypeOperation> GetByType(bool type);
-        TypeOperation GetById(int id);
+        Task<IEnumerable<TypeOperation>> GetByTypeAsync(bool type);
+        Task<TypeOperation> GetByIdAsync(int id);
         void Edit(TypeOperation operation);
         void Delete(TypeOperation operation);
     }

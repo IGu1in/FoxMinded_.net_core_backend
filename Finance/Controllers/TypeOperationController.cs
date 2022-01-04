@@ -25,9 +25,9 @@ namespace Finance.Controllers
         }
 
         [HttpGet("{type}")]
-        public ActionResult<TypeOperation> Get(bool type)
+        public async Task<ActionResult<TypeOperation>> GetAsync(bool type)
         {
-            var operation = _service.GetByType(type);
+            var operation = await _service.GetByTypeAsync(type);
 
             if (operation == null)
             {

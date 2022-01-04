@@ -25,7 +25,7 @@ namespace Finance.Application
 
         public async Task DeleteAsync(int id)
         {
-            var financeOperation = _repository.FinanceOperation.GetById(id);
+            var financeOperation = await _repository.FinanceOperation.GetByIdAsync(id);
 
             if (financeOperation == null)
             {
@@ -38,7 +38,7 @@ namespace Finance.Application
 
         public async Task EditAsync(FinanceOperation operation)
         {
-            var financeOperation = _repository.FinanceOperation.GetById(operation.FinanceOperationId);
+            var financeOperation = await _repository.FinanceOperation.GetByIdAsync(operation.FinanceOperationId);
 
             if (financeOperation == null)
             {
@@ -54,7 +54,7 @@ namespace Finance.Application
             return await _repository.FinanceOperation.GetAsync();
         }
 
-        public IEnumerable<object> GetByData(string dataStr)
+        public async Task<IEnumerable<object>> GetByDataAsync(string dataStr)
         {
             var isData = DateTime.TryParse(dataStr, out var data);
 
@@ -67,10 +67,10 @@ namespace Finance.Application
             decimal sumExpence = 0;
             var result = new List<object>();
 
-            var listIncome = _repository.FinanceOperation.GetByData(data, true).ToList();
-            var listExpence = _repository.FinanceOperation.GetByData(data, false).ToList();
+            var listIncome = await _repository.FinanceOperation.GetByDataAsync(data, true);
+            var listExpence = await _repository.FinanceOperation.GetByDataAsync(data, false);
 
-            if (listExpence.Count == 0 && listIncome.Count == 0)
+            if (!listExpence.Any() && !listIncome.Any())
             {
                 throw new NotFoundException();
             }
@@ -93,26 +93,26 @@ namespace Finance.Application
             return result;
         }
 
-        public IEnumerable<object> GetByPeriod(string dataStr1, string dataStr2)
+        public async Task<IEnumerable<object>> GetByPeriodAsync(string dataStr1, string dataStr2)
         {
             var isData1 = DateTime.TryParse(dataStr1, out var data1);
             var isData2 = DateTime.TryParse(dataStr2, out var data2);
 
             if (!isData1 || !isData2)
             {
-                new BadRequestException();
+                throw new BadRequestException();
             }
 
             decimal sumIncome = 0;
             decimal sumExpence = 0;
             var result = new List<object>();
 
-            var listIncome = _repository.FinanceOperation.GetByPeriod(data1, data2, true).ToList();
-            var listExpence = _repository.FinanceOperation.GetByPeriod(data1, data2, false).ToList();
+            var listIncome = await _repository.FinanceOperation.GetByPeriodAsync(data1, data2, true);
+            var listExpence = await _repository.FinanceOperation.GetByPeriodAsync(data1, data2, false);
 
-            if (listExpence.Count == 0 && listIncome.Count == 0)
+            if (!listExpence.Any() && !listIncome.Any())
             {
-                new NotFoundException();
+                throw new NotFoundException();
             }
 
             foreach (var oper in listIncome)

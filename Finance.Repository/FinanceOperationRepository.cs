@@ -37,19 +37,19 @@ namespace Finance.Repository
             return await _db.Operations.Include(p => p.TypeOperation).ToListAsync();
         }
 
-        public IEnumerable<FinanceOperation> GetByData(DateTime data, bool type)
+        public async Task<IEnumerable<FinanceOperation>> GetByDataAsync(DateTime data, bool type)
         {
-            return _db.Operations.Include(p => p.TypeOperation).AsParallel().Where(x => x.TypeOperation.IsIncome == type).Where(x => DateTime.Parse(x.Data) == data).ToList();
+            return await _db.Operations.Include(p => p.TypeOperation).Where(x => x.TypeOperation.IsIncome == type).Where(x => DateTime.Parse(x.Data) == data).ToListAsync();
         }
 
-        public FinanceOperation GetById(int id)
+        public async Task<FinanceOperation> GetByIdAsync(int id)
         {
-            return _db.Operations.FirstOrDefault(x => x.FinanceOperationId == id);
+            return await _db.Operations.FirstOrDefaultAsync(x => x.FinanceOperationId == id);
         }
 
-        public IEnumerable<FinanceOperation> GetByPeriod(DateTime data1, DateTime data2, bool type)
+        public async Task<IEnumerable<FinanceOperation>> GetByPeriodAsync(DateTime data1, DateTime data2, bool type)
         {
-            return _db.Operations.Include(p => p.TypeOperation).AsParallel().Where(x => x.TypeOperation.IsIncome == type).Where(x => DateTime.Parse(x.Data) > data1).Where(x => DateTime.Parse(x.Data) < data2).ToList();
+            return await _db.Operations.Include(p => p.TypeOperation).Where(x => x.TypeOperation.IsIncome == type).Where(x => DateTime.Parse(x.Data) > data1).Where(x => DateTime.Parse(x.Data) < data2).ToListAsync();
         }
     }
 }

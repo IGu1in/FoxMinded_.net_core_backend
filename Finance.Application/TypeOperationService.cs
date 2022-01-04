@@ -23,7 +23,7 @@ namespace Finance.Application
 
         public async Task DeleteAsync(int id)
         {
-            var typeOperation = _repository.TypeOperation.GetById(id);
+            var typeOperation = await _repository.TypeOperation.GetByIdAsync(id);
 
             if (typeOperation == null)
             {
@@ -36,7 +36,7 @@ namespace Finance.Application
 
         public async Task EditAsync(TypeOperation operation)
         {
-            var typeOperation = _repository.TypeOperation.GetById(operation.TypeOperationId);
+            var typeOperation = await _repository.TypeOperation.GetByIdAsync(operation.TypeOperationId);
 
             if (typeOperation == null)
             {
@@ -52,9 +52,9 @@ namespace Finance.Application
             return await _repository.TypeOperation.GetAsync();
         }
 
-        public IEnumerable<TypeOperation> GetByType(bool type)
+        public async Task<IEnumerable<TypeOperation>> GetByTypeAsync(bool type)
         {
-            return _repository.TypeOperation.GetByType(type);
+            return await _repository.TypeOperation.GetByTypeAsync(type);
         }
     }
 }

@@ -9,9 +9,9 @@ namespace Finance.Infrastructure
     {
         Task CreateAsync(FinanceOperation operation);
         Task<IEnumerable<FinanceOperation>> GetAsync();
-        FinanceOperation GetById(int id);
-        IEnumerable<FinanceOperation> GetByData(DateTime data, bool type);
-        IEnumerable<FinanceOperation> GetByPeriod(DateTime data1, DateTime data2, bool type);
+        Task<FinanceOperation> GetByIdAsync(int id);
+        Task<IEnumerable<FinanceOperation>> GetByDataAsync(DateTime data, bool type);
+        Task<IEnumerable<FinanceOperation>> GetByPeriodAsync(DateTime data1, DateTime data2, bool type);
         void Edit(FinanceOperation operation);
         void Delete(FinanceOperation operation);
     }

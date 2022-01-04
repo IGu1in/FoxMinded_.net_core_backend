@@ -25,11 +25,11 @@ namespace Finance.Controllers
         }
 
         [HttpGet("{dataStr}")]
-        public ActionResult<FinanceOperation> Get(string dataStr)
+        public async Task<ActionResult<FinanceOperation>> GetAsync(string dataStr)
         {
             try
             {
-                var result = _service.GetByData(dataStr);
+                var result = await _service.GetByDataAsync(dataStr);
 
                 return new ObjectResult(result);
             }
@@ -44,11 +44,11 @@ namespace Finance.Controllers
         }
 
         [HttpGet("{dataStr1}/{dataStr2}")]
-        public ActionResult<FinanceOperation> Get(string dataStr1, string dataStr2)
+        public async Task<ActionResult<FinanceOperation>> GetAsync(string dataStr1, string dataStr2)
         {
             try
             {
-                var result = _service.GetByPeriod(dataStr1, dataStr2);
+                var result = await _service.GetByPeriodAsync(dataStr1, dataStr2);
 
                 return new ObjectResult(result);
             }

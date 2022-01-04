@@ -8,8 +8,8 @@ namespace Finance.Infrastructure
     {
         Task CreateAsync(FinanceOperation operation);
         Task<IEnumerable<FinanceOperation>> GetAsync();
-        IEnumerable<object> GetByData(string data);
-        IEnumerable<object> GetByPeriod(string data1, string data2);
+        Task<IEnumerable<object>> GetByDataAsync(string data);
+        Task<IEnumerable<object>> GetByPeriodAsync(string data1, string data2);
         Task EditAsync(FinanceOperation operation);
         Task DeleteAsync(int id);
     }
