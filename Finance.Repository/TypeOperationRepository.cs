@@ -26,9 +26,9 @@ namespace Finance.Repository
             _db.TypeOperations.Remove(operation);
         }
 
-        public void Edit(TypeOperation operation)
+        public void Edit(TypeOperation operationWithOldData, TypeOperation operationWithNewData)
         {
-            _db.TypeOperations.Update(operation);
+            _db.Entry(operationWithOldData).CurrentValues.SetValues(operationWithNewData);
         }
 
         public async Task<IEnumerable<TypeOperation>> GetAsync()

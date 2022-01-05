@@ -45,7 +45,7 @@ namespace Finance.Application
                 throw new NotFoundException();
             }
 
-            _repository.FinanceOperation.Edit(operation);
+            _repository.FinanceOperation.Edit(financeOperation, operation);
             await _repository.SaveChangesAsync();
         }
 

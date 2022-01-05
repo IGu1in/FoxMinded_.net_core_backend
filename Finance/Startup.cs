@@ -21,9 +21,7 @@ namespace Finance
         public void ConfigureServices(IServiceCollection services)
         {
             string con = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<FinanceContext>(options => options.
-                UseSqlServer(con).
-                UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+            services.AddDbContext<FinanceContext>(options => options.UseSqlServer(con));
             services.AddTransient<IFinanceOperationRepository, FinanceOperationRepository>();
             services.AddTransient<IFinanceOperationService, FinanceOperationService>();
             services.AddTransient<ITypeOperationRepository, TypeOperationRepository>();
