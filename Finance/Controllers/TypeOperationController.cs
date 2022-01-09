@@ -51,7 +51,7 @@ namespace Finance.Controllers
         }
 
         [HttpPut]
-        public ActionResult<TypeOperation> PutAsync(TypeOperation operation)
+        public async Task<ActionResult<TypeOperation>> PutAsync(TypeOperation operation)
         {
             if (operation == null)
             {
@@ -60,7 +60,7 @@ namespace Finance.Controllers
 
             try
             {
-                _service.EditAsync(operation);
+                await _service.EditAsync(operation);
             }
             catch (NotFoundException)
             {
