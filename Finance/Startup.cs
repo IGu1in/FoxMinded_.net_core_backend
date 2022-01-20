@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System;
 
 namespace Finance
@@ -15,6 +16,7 @@ namespace Finance
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -30,7 +32,7 @@ namespace Finance
             services.AddTransient<IRepositoryManager, RepositoryManager>();
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());            
         }
 
 
@@ -43,6 +45,7 @@ namespace Finance
             });
             app.UseDeveloperExceptionPage();
             app.UseRouting();
+            app.UseMiddleware<Middleware.ErrorHandlerMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers(); 

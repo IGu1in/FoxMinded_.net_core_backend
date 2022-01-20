@@ -38,15 +38,24 @@ namespace Finance.Repository
         public async Task<IEnumerable<ViewModel.FinanceOperation>> GetAsync()
         {
             var listOperation = await _db.Operations.Include(p => p.TypeOperation).ToListAsync();
-                
+
             return _mapper.Map<IEnumerable<ViewModel.FinanceOperation>>(listOperation);
         }
 
-        public async Task<IEnumerable<ViewModel.FinanceOperation>> GetByDataAsync(DateTime data, bool type)
+        public async Task<IEnumerable<ViewModel.FinanceOperation>> GetByDataAsync(DateTime date, bool type)
         {
-            var listOperation = await _db.Operations.Include(p => p.TypeOperation).Where(x => x.TypeOperation.IsIncome == type).Where(x => DateTime.Parse(x.Data) == data).ToListAsync();
+            var selectedOperation = new List<FinanceOperation>();
+            var listOperation = await _db.Operations.Include(p => p.TypeOperation).Where(x => x.TypeOperation.IsIncome == type).ToListAsync();
             
-            return _mapper.Map<IEnumerable<ViewModel.FinanceOperation>>(listOperation);
+            Parallel.ForEach(listOperation, oper =>
+            {
+                if (DateTime.Parse(oper.Data) == date)
+                {
+                    selectedOperation.Add(oper);
+                }
+            });
+
+            return _mapper.Map<IEnumerable<ViewModel.FinanceOperation>>(selectedOperation);
         }
 
         public async Task<ViewModel.FinanceOperation> GetByIdAsync(int id)
@@ -54,13 +63,21 @@ namespace Finance.Repository
             var operation = await _db.Operations.FirstOrDefaultAsync(x => x.FinanceOperationId == id);
 
             return _mapper.Map<ViewModel.FinanceOperation>(operation);
-            //return operation;
         }
 
-        public async Task<IEnumerable<ViewModel.FinanceOperation>> GetByPeriodAsync(DateTime data1, DateTime data2, bool type)
+        public async Task<IEnumerable<ViewModel.FinanceOperation>> GetByPeriodAsync(DateTime date1, DateTime date2, bool type)
         {
-            var listOperation = await _db.Operations.Include(p => p.TypeOperation).Where(x => x.TypeOperation.IsIncome == type).Where(x => DateTime.Parse(x.Data) > data1).Where(x => DateTime.Parse(x.Data) < data2).ToListAsync();
+            var selectedOperation = new List<FinanceOperation>();
+            var listOperation = await _db.Operations.Include(p => p.TypeOperation).Where(x => x.TypeOperation.IsIncome == type).ToListAsync();
             
+            Parallel.ForEach(listOperation, oper =>
+            {
+                if (DateTime.Parse(oper.Data) > date1 && DateTime.Parse(oper.Data) < date2)
+                {
+                    selectedOperation.Add(oper);
+                }
+            });
+
             return _mapper.Map<IEnumerable<ViewModel.FinanceOperation>>(listOperation);
         }
     }
