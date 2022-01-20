@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Finance.Models\Finance.Models.csproj" />
+    <ProjectReference Include="..\Finance.ViewModel\Finance.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

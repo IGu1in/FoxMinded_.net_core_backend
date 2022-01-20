@@ -17,6 +17,25 @@ namespace Finance.IntegrationTests
     [TestFixture]
     public class TypeOperationControllerTests
     {
+        private readonly List<TypeOperation> testValueTypeOperations = new()
+        {
+            new TypeOperation
+            {
+                Name = "buy",
+                IsIncome = false
+            },
+            new TypeOperation
+            {
+                Name = "sold",
+                IsIncome = true
+            },
+            new TypeOperation
+            {
+                Name = "buy TV",
+                IsIncome = false
+            }
+        };
+
         [Test]
         public async Task AddTypeOperation_OK()
         {
@@ -29,25 +48,12 @@ namespace Finance.IntegrationTests
                     services.Remove(dbContextDescriptor);
                     services.AddDbContext<FinanceContext>(options =>
                     {
-                        options.UseInMemoryDatabase("financeDb");
+                        options.UseInMemoryDatabase("financeDbAddType1");
                     });
                 });
             });
             var dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<FinanceContext>();
-            var typeOperations = new List<TypeOperation>()
-            {   new TypeOperation {
-                    Name = "buy",
-                    IsIncome = false
-                },
-                new TypeOperation {
-                    Name = "sold",
-                    IsIncome = true
-                },
-                new TypeOperation {
-                    Name = "buy TV",
-                    IsIncome = false
-                }};
-            await dbContext.TypeOperations.AddRangeAsync(typeOperations);
+            await dbContext.TypeOperations.AddRangeAsync(testValueTypeOperations);
             await dbContext.SaveChangesAsync();
             var httpClient = webHost.CreateClient();
             var typeOperation = new TypeOperation
@@ -74,25 +80,12 @@ namespace Finance.IntegrationTests
                     services.Remove(dbContextDescriptor);
                     services.AddDbContext<FinanceContext>(options =>
                     {
-                        options.UseInMemoryDatabase("financeDb");
+                        options.UseInMemoryDatabase("financeDbAddType2");
                     });
                 });
             });
             var dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<FinanceContext>();
-            var typeOperations = new List<TypeOperation>()
-            {   new TypeOperation {
-                    Name = "buy",
-                    IsIncome = false
-                },
-                new TypeOperation {
-                    Name = "sold",
-                    IsIncome = true
-                },
-                new TypeOperation {
-                    Name = "buy TV",
-                    IsIncome = false
-                }};
-            await dbContext.TypeOperations.AddRangeAsync(typeOperations);
+            await dbContext.TypeOperations.AddRangeAsync(testValueTypeOperations);
             await dbContext.SaveChangesAsync();
             var httpClient = webHost.CreateClient();
             var typeOperation = new TypeOperation
@@ -118,25 +111,12 @@ namespace Finance.IntegrationTests
                     services.Remove(dbContextDescriptor);
                     services.AddDbContext<FinanceContext>(options =>
                     {
-                        options.UseInMemoryDatabase("financeDb");
+                        options.UseInMemoryDatabase("financeDbGetType1");
                     });
                 });
             });
             var dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<FinanceContext>();
-            var typeOperations = new List<TypeOperation>()
-            {   new TypeOperation {
-                    Name = "buy",
-                    IsIncome = false
-                },
-                new TypeOperation {
-                    Name = "sold",
-                    IsIncome = true
-                },
-                new TypeOperation {
-                    Name = "buy TV",
-                    IsIncome = false
-                }};
-            await dbContext.TypeOperations.AddRangeAsync(typeOperations);
+            await dbContext.TypeOperations.AddRangeAsync(testValueTypeOperations);
             await dbContext.SaveChangesAsync();
             var httpClient = webHost.CreateClient();
             
@@ -157,25 +137,12 @@ namespace Finance.IntegrationTests
                     services.Remove(dbContextDescriptor);
                     services.AddDbContext<FinanceContext>(options =>
                     {
-                        options.UseInMemoryDatabase("financeDb");
+                        options.UseInMemoryDatabase("financeDbGetType2");
                     });
                 });
             });
             var dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<FinanceContext>();
-            var typeOperations = new List<TypeOperation>()
-            {   new TypeOperation {
-                    Name = "buy",
-                    IsIncome = false
-                },
-                new TypeOperation {
-                    Name = "sold",
-                    IsIncome = true
-                },
-                new TypeOperation {
-                    Name = "buy TV",
-                    IsIncome = false
-                }};
-            await dbContext.TypeOperations.AddRangeAsync(typeOperations);
+            await dbContext.TypeOperations.AddRangeAsync(testValueTypeOperations);
             await dbContext.SaveChangesAsync();
             var httpClient = webHost.CreateClient();
 
@@ -196,25 +163,12 @@ namespace Finance.IntegrationTests
                     services.Remove(dbContextDescriptor);
                     services.AddDbContext<FinanceContext>(options =>
                     {
-                        options.UseInMemoryDatabase("financeDb");
+                        options.UseInMemoryDatabase("financeDbEditType1");
                     });
                 });
             });
             var dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<FinanceContext>();
-            var typeOperations = new List<TypeOperation>()
-            {   new TypeOperation {
-                    Name = "buy",
-                    IsIncome = false
-                },
-                new TypeOperation {
-                    Name = "sold",
-                    IsIncome = true
-                },
-                new TypeOperation {
-                    Name = "buy TV",
-                    IsIncome = false
-                }};
-            await dbContext.TypeOperations.AddRangeAsync(typeOperations);
+            await dbContext.TypeOperations.AddRangeAsync(testValueTypeOperations);
             await dbContext.SaveChangesAsync();
             var httpClient = webHost.CreateClient();
             var typeOperation = new TypeOperation
@@ -242,25 +196,12 @@ namespace Finance.IntegrationTests
                     services.Remove(dbContextDescriptor);
                     services.AddDbContext<FinanceContext>(options =>
                     {
-                        options.UseInMemoryDatabase("financeDb");
+                        options.UseInMemoryDatabase("financeDbEditType2");
                     });
                 });
             });
             var dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<FinanceContext>();
-            var typeOperations = new List<TypeOperation>()
-            {   new TypeOperation {
-                    Name = "buy",
-                    IsIncome = false
-                },
-                new TypeOperation {
-                    Name = "sold",
-                    IsIncome = true
-                },
-                new TypeOperation {
-                    Name = "buy TV",
-                    IsIncome = false
-                }};
-            await dbContext.TypeOperations.AddRangeAsync(typeOperations);
+            await dbContext.TypeOperations.AddRangeAsync(testValueTypeOperations);
             await dbContext.SaveChangesAsync();
             var httpClient = webHost.CreateClient();
             var typeOperation = new TypeOperation
@@ -288,25 +229,12 @@ namespace Finance.IntegrationTests
                     services.Remove(dbContextDescriptor);
                     services.AddDbContext<FinanceContext>(options =>
                     {
-                        options.UseInMemoryDatabase("financeDb");
+                        options.UseInMemoryDatabase("financeDbDeleteType1");
                     });
                 });
             });
             var dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<FinanceContext>();
-            var typeOperations = new List<TypeOperation>()
-            {   new TypeOperation {
-                    Name = "buy",
-                    IsIncome = false
-                },
-                new TypeOperation {
-                    Name = "sold",
-                    IsIncome = true
-                },
-                new TypeOperation {
-                    Name = "buy TV",
-                    IsIncome = false
-                }};
-            await dbContext.TypeOperations.AddRangeAsync(typeOperations);
+            await dbContext.TypeOperations.AddRangeAsync(testValueTypeOperations);
             await dbContext.SaveChangesAsync();
             var httpClient = webHost.CreateClient();
 
@@ -327,25 +255,12 @@ namespace Finance.IntegrationTests
                     services.Remove(dbContextDescriptor);
                     services.AddDbContext<FinanceContext>(options =>
                     {
-                        options.UseInMemoryDatabase("financeDb");
+                        options.UseInMemoryDatabase("financeDbDeleteType2");
                     });
                 });
             });
             var dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<FinanceContext>();
-            var typeOperations = new List<TypeOperation>()
-            {   new TypeOperation {
-                    Name = "buy",
-                    IsIncome = false
-                },
-                new TypeOperation {
-                    Name = "sold",
-                    IsIncome = true
-                },
-                new TypeOperation {
-                    Name = "buy TV",
-                    IsIncome = false
-                }};
-            await dbContext.TypeOperations.AddRangeAsync(typeOperations);
+            await dbContext.TypeOperations.AddRangeAsync(testValueTypeOperations);
             await dbContext.SaveChangesAsync();
             var httpClient = webHost.CreateClient();
 

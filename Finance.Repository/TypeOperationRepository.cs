@@ -1,4 +1,5 @@
-﻿using Finance.Infrastructure;
+﻿using AutoMapper;
+using Finance.Infrastructure;
 using Finance.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -10,40 +11,48 @@ namespace Finance.Repository
     public class TypeOperationRepository : ITypeOperationRepository
     {
         private readonly FinanceContext _db;
+        private readonly IMapper _mapper;
 
-        public TypeOperationRepository(FinanceContext context)
+        public TypeOperationRepository(FinanceContext context, IMapper mapper)
         {
             _db = context;
+            _mapper = mapper;
         }
 
-        public async Task CreateAsync(TypeOperation operation)
+        public async Task CreateAsync(ViewModel.TypeOperation operation)
         {
-            await _db.TypeOperations.AddAsync(operation);
+            await _db.TypeOperations.AddAsync(_mapper.Map<TypeOperation>(operation));
         }
 
-        public void Delete(TypeOperation operation)
+        public void Delete(ViewModel.TypeOperation operation)
         {
-            _db.TypeOperations.Remove(operation);
+            _db.Entry(_mapper.Map<TypeOperation>(operation)).State = EntityState.Deleted;
         }
 
-        public void Edit(TypeOperation operationWithOldData, TypeOperation operationWithNewData)
+        public void Edit(ViewModel.TypeOperation operationWithOldData, ViewModel.TypeOperation operationWithNewData)
         {
-            _db.Entry(operationWithOldData).CurrentValues.SetValues(operationWithNewData);
+            _db.Entry(_mapper.Map<TypeOperation>(operationWithOldData)).CurrentValues.SetValues(_mapper.Map<TypeOperation>(operationWithNewData));
         }
 
-        public async Task<IEnumerable<TypeOperation>> GetAsync()
+        public async Task<IEnumerable<ViewModel.TypeOperation>> GetAsync()
         {
-            return await _db.TypeOperations.ToListAsync();
+            var listOperation = await _db.TypeOperations.ToListAsync();
+
+            return _mapper.Map<IEnumerable<ViewModel.TypeOperation>>(listOperation);
         }
 
-        public async Task<TypeOperation> GetByIdAsync(int id)
+        public async Task<ViewModel.TypeOperation> GetByIdAsync(int id)
         {
-            return await _db.TypeOperations.FirstOrDefaultAsync(x => x.TypeOperationId == id);
+            var operation = await _db.TypeOperations.FirstOrDefaultAsync(x => x.TypeOperationId == id);
+
+            return _mapper.Map<ViewModel.TypeOperation>(operation);
         }
 
-        public async Task<IEnumerable<TypeOperation>> GetByTypeAsync(bool type)
+        public async Task<IEnumerable<ViewModel.TypeOperation>> GetByTypeAsync(bool type)
         {
-            return await _db.TypeOperations.Where(x => x.IsIncome == type).ToListAsync();
+            var listOperation = await _db.TypeOperations.Where(x => x.IsIncome == type).ToListAsync();
+
+            return _mapper.Map<IEnumerable<ViewModel.TypeOperation>>(listOperation);
         }
     }
 }

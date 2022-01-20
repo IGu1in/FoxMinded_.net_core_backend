@@ -1,6 +1,6 @@
 ﻿using Finance.Infrastructure.CustomExceptions;
 using Finance.Infrastructure;
-using Finance.Models;
+using Finance.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace Finance.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FinanceOperation>>> GetAsync()
         {
-            return  new ObjectResult(await _service.GetAsync());
+            return new ObjectResult(await _service.GetAsync());
         }
 
         [HttpGet("{dataStr}")]
@@ -43,12 +43,12 @@ namespace Finance.Controllers
             }
         }
 
-        [HttpGet("{dataStr1}/{dataStr2}")]
-        public async Task<ActionResult<FinanceOperation>> GetAsync(string dataStr1, string dataStr2)
+        [HttpGet("{dataBeginnigStr}/{dataEndStr}")]
+        public async Task<ActionResult<FinanceOperation>> GetAsync(string dataBeginnigStr, string dataEndStr)
         {
             try
             {
-                var result = await _service.GetByPeriodAsync(dataStr1, dataStr2);
+                var result = await _service.GetByPeriodAsync(dataBeginnigStr, dataEndStr);
 
                 return new ObjectResult(result);
             }

@@ -1,6 +1,6 @@
 ﻿using Finance.Infrastructure.CustomExceptions;
 using Finance.Infrastructure;
-using Finance.Models;
+using Finance.ViewModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

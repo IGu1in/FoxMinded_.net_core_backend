@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Finance
 {
@@ -29,6 +30,7 @@ namespace Finance
             services.AddTransient<IRepositoryManager, RepositoryManager>();
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
 

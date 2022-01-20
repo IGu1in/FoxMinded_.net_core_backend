@@ -1,6 +1,6 @@
 ﻿using Finance.Infrastructure.CustomExceptions;
 using Finance.Infrastructure;
-using Finance.Models;
+using Finance.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,10 +93,10 @@ namespace Finance.Application
             return result;
         }
 
-        public async Task<IEnumerable<object>> GetByPeriodAsync(string dataStr1, string dataStr2)
+        public async Task<IEnumerable<object>> GetByPeriodAsync(string dataBeginnigStr, string dataEndStr)
         {
-            var isData1 = DateTime.TryParse(dataStr1, out var data1);
-            var isData2 = DateTime.TryParse(dataStr2, out var data2);
+            var isData1 = DateTime.TryParse(dataBeginnigStr, out var data1);
+            var isData2 = DateTime.TryParse(dataEndStr, out var data2);
 
             if (!isData1 || !isData2)
             {
